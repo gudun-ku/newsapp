@@ -56,8 +56,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onPostExecute(result: ArrayList<Data>?) {
-            super.onPostExecute(result)
+            if (result != null) {
+                    updateUi(result)
+                }
         }
+    }
+
+    fun updateUi(list: ArrayList<Data>) {
+        listView?.adapter = NewsAdapter(this, list)
     }
 
 
