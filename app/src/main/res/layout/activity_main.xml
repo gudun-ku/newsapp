@@ -44,6 +44,7 @@
             android:layout_height="48dp"
             android:layout_margin="8dp"
             android:text="@string/load_more"
+            android:onClick="loadMore"
             android:layout_alignParentBottom="true"
             android:background="@color/colorAccent"
     />

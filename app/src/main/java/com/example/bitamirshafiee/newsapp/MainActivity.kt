@@ -21,6 +21,8 @@ import java.nio.charset.Charset
 class MainActivity : AppCompatActivity() {
 
     val TAG: String = this.javaClass.simpleName
+    val apikey: String = "f1618ca6-017d-41e1-95b8-cf1867d80cabde"
+
 
     var listData = ArrayList<Data>()
     var pageNumber = 1
@@ -32,10 +34,18 @@ class MainActivity : AppCompatActivity() {
 
     fun searchWord(view: View) {
         pageNumber = 1
-        val stringUrl = "https://content.guardianapis.com/search?q=${editText?.text}&tag=politics/politics&page=$pageNumber"
+        val stringUrl = "https://content.guardianapis.com/search?q=${editText?.text}&tag=politics/politics&api-key=$apikey&page=$pageNumber"
 
         listData.clear()
         var myAsyncTask = MyAsyncTask()
+        myAsyncTask.execute(stringUrl)
+    }
+
+    fun loadMore(view: View) {
+        pageNumber += 1
+        val stringUrl = "https://content.guardianapis.com/search?q=${editText?.text}&tag=politics/politics&api-key=$apikey&page=$pageNumber"
+
+        val myAsyncTask = MyAsyncTask()
         myAsyncTask.execute(stringUrl)
     }
 
@@ -50,9 +60,7 @@ class MainActivity : AppCompatActivity() {
                 Log.e("MainActivity", "Problems making HTTP request $e")
             }
 
-            val data = extractFeaturesFromResponse(jsonResponse)
-
-            return data
+            return  extractFeaturesFromResponse(jsonResponse)
         }
 
         override fun onPostExecute(result: ArrayList<Data>?) {
